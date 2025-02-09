@@ -8,8 +8,15 @@ enum SortOptions { byName, byDateCreated, byUsage }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ThemeMode themeMode = ThemeMode.system;
   runApp(
-      StocardApp()
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        home: StocardApp(),
+        themeMode: themeMode,
+      )
   );
 }
 
@@ -25,19 +32,14 @@ class _StocardAppState extends State<StocardApp> {
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
-  ThemeMode themeMode = ThemeMode.light;
+
+  ThemeMode themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
     const String title = 'Budaicard';
 
-    return MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: themeMode,
-      home: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             title: _isSearching ?
               TextField(
@@ -73,49 +75,40 @@ class _StocardAppState extends State<StocardApp> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => Theme(
-                        data: themeMode == ThemeMode.light ? ThemeData.light() : ThemeData.dark(),
-                        child: AlertDialog(
-                          title: const Text("Donate"),
-                          icon: const Icon(Icons.favorite),
-                          iconColor: Colors.red,
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 10,
-                            children: [
-                              const Text(
-                                "I'm a student and I work on this app in my free time. If you like it, you can support development by donating. And if you don't want to donate, that's fine too.",
-                                softWrap: true,
-                              ),
-                              const Text("Enjoy the app!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
-                            ],
-                          ),
-                          actions: [
-                            FilledButton(
-                              onPressed: () => {
-                                launchUrl(Uri.parse("https://ko-fi.com/budai"))
-                              },
-                              child: const Text('Donate'),
+                        data: ThemeData.from(colorScheme: ColorScheme.of(context)),
+                      child: AlertDialog(
+                        title: const Text("Donate"),
+                        icon: const Icon(Icons.favorite),
+                        iconColor: Colors.red,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 10,
+                          children: [
+                            const Text(
+                              "I'm a student and I work on this app in my free time. If you like it, you can support development by donating. And if you don't want to donate, that's fine too.",
+                              softWrap: true,
                             ),
-                            OutlinedButton(
-                                onPressed: () => {
-                                  Navigator.pop(context)
-                                },
-                                child: const Text('Close'),
-                            )
+                            const Text("Enjoy the app!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
                           ],
                         ),
+                        actions: [
+                          FilledButton(
+                            onPressed: () => {
+                              launchUrl(Uri.parse("https://ko-fi.com/budai"))
+                            },
+                            child: const Text('Donate'),
+                          ),
+                          OutlinedButton(
+                            onPressed: () => {
+                              Navigator.pop(context)
+                            },
+                            child: const Text('Close'),
+                          )
+                        ],
                       )
-                  );
+                  ));
                 },
                 icon: const Icon(Icons.favorite_border),
-              ),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      themeMode = themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-                    });
-                  },
-                  icon: Icon(themeMode == ThemeMode.light ? Icons.dark_mode_outlined : Icons.light_mode_outlined),
               ),
               PopupMenuButton<SortOptions>(
                 initialValue: selectedSort,
@@ -155,7 +148,6 @@ class _StocardAppState extends State<StocardApp> {
             },
           ),
           body: CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
-        ),
     );
   }
 }
