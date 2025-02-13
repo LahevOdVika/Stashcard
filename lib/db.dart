@@ -8,6 +8,7 @@ class UserCard {
   final int code;
   final int usage;
   final DateTime createdAt;
+  final String symbology;
 
   const UserCard({
     this.id,
@@ -15,6 +16,7 @@ class UserCard {
     required this.code,
     required this.usage,
     required this.createdAt,
+    required this.symbology,
   });
 
   Map<String, Object?> toMap() {
@@ -24,21 +26,23 @@ class UserCard {
       'code': code,
       'usage': usage,
       'created_at': createdAt.toIso8601String(),
+      'symbology': symbology,
     };
   }
 
   @override
   String toString() {
-    return 'UserCard{id: $id, name: $name, code: $code, usage $usage, created_at: $createdAt}';
+    return 'UserCard{id: $id, name: $name, code: $code, usage $usage, created_at: $createdAt, symbology: $symbology}';
   }
 
-  UserCard copyWith({int? id, String? name, int? code, int? usage, DateTime? createdAt}) {
+  UserCard copyWith({int? id, String? name, int? code, int? usage, DateTime? createdAt, String? symbology}) {
     return UserCard(
       id: id ?? this.id,
       name: name ?? this.name,
       code: code ?? this.code,
       usage: usage ?? this.usage,
       createdAt: createdAt ?? this.createdAt,
+      symbology: symbology ?? this.symbology,
     );
   }
 }
@@ -52,7 +56,7 @@ class DatabaseHelper {
         join(await getDatabasesPath(), 'user_cards.db'),
         onCreate: (db, version) {
           return db.execute(
-              'CREATE TABLE user_cards(id INTEGER PRIMARY KEY, name TEXT, code INTEGER, usage INTEGER, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)'
+              'CREATE TABLE user_cards(id INTEGER PRIMARY KEY, name TEXT, code INTEGER, usage INTEGER, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, symbology TEXT)'
           );
         },
         version: 1
@@ -78,6 +82,7 @@ class DatabaseHelper {
       code: map['code'] as int,
       usage: map['usage'] as int,
       createdAt: DateTime.parse(map['created_at'] as String),
+      symbology: map['symbology'] as String,
     )).toList();
   }
 
@@ -100,6 +105,7 @@ class DatabaseHelper {
       code: map['code'] as int,
       usage: map['usage'] as int,
       createdAt: DateTime.parse(map['created_at'] as String),
+      symbology: map['symbology'] as String,
     )).toList();
   }
 
@@ -116,6 +122,7 @@ class DatabaseHelper {
       code: maps[0]['code'] as int,
       usage: maps[0]['usage'] as int,
       createdAt: DateTime.parse(maps[0]['created_at'] as String),
+      symbology: maps[0]['symbology'] as String,
     );
   }
 
@@ -132,6 +139,7 @@ class DatabaseHelper {
       code: maps[0]['code'] as int,
       usage: maps[0]['usage'] as int,
       createdAt: DateTime.parse(maps[0]['created_at'] as String),
+      symbology: maps[0]['symbology'] as String,
     );
   }
 

@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:stocard_alternative/cardedit.dart';
 import 'package:stocard_alternative/db.dart';
 import 'package:stocard_alternative/main.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 enum CardOptions { edit, share, delete }
+
+Map<String, Symbology> symbologies = {
+  "code39": Code39(),
+  "code93": Code93(),
+  "code128": Code128(),
+  "ean8": EAN8(),
+  "ean13": EAN13(),
+  "upcA": UPCA(),
+  "upcE": UPCE(),
+};
 
 class CardDetail extends StatefulWidget {
   const CardDetail({super.key, required this.cardId});
@@ -125,8 +136,11 @@ class _CardDetailState extends State<CardDetail> {
                 value: card!.code.toString(),
                 showValue: true,
                 textSpacing: 10,
+                symbology: symbologies[card!.symbology],
               ),
             ),
+            const SizedBox(height: 30),
+            Text("Card type: ${card!.symbology}"),
           ],
         ),
       ),
