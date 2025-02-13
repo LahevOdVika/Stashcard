@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:stocard_alternative/cardedit.dart';
 import 'package:stocard_alternative/db.dart';
 import 'package:stocard_alternative/main.dart';

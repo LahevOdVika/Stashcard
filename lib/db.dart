@@ -148,17 +148,15 @@ class DatabaseHelper {
 
     UserCard? card = await getOneCard(cardId);
 
-    if (card != null) {
-      int newUsage = card.usage + 1;
+    int newUsage = card.usage + 1;
 
-      await db.update(
-        'user_cards',
-        {'usage': newUsage},
-        where: 'id = ?',
-        whereArgs: [cardId],
-      );
+    await db.update(
+      'user_cards',
+      {'usage': newUsage},
+      where: 'id = ?',
+      whereArgs: [cardId],
+    );
     }
-  }
 
   Future<void> updateUserCard(UserCard updatedCard) async {
     final db = await database;
