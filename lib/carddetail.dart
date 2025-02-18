@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stocard_alternative/cardedit.dart';
-import 'package:stocard_alternative/db.dart';
-import 'package:stocard_alternative/main.dart';
+import 'package:stashcard/cardedit.dart';
+import 'package:stashcard/db.dart';
+import 'package:stashcard/main.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 enum CardOptions { edit, share, delete }
@@ -98,7 +98,7 @@ class _CardDetailState extends State<CardDetail> {
                               await db.deleteUserCard(widget.cardId!);
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => StocardApp()),
+                                MaterialPageRoute(builder: (context) => Stashcard()),
                                     (route) => false,
                               );
                             },

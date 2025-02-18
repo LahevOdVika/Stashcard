@@ -1,5 +1,5 @@
-name: stocard_alternative
-description: "Stocard app alternative"
+name: stashcard
+description: "Stashcard - A Flutter app for managing your cards"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 

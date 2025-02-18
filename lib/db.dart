@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stocard_alternative/main.dart';
+import 'package:stashcard/main.dart';
 
 class UserCard {
   final int? id;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:stocard_alternative/db.dart';
+import 'package:stashcard/db.dart';
 import 'carddetail.dart';
 import 'main.dart';
 
@@ -56,7 +56,7 @@ class _Scanner extends State<Scanner> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const StocardApp()),
+        MaterialPageRoute(builder: (context) => const Stashcard()),
         (Route<dynamic> route) => false,
       );
 

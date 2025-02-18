@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stocard_alternative/carddetail.dart';
-import 'package:stocard_alternative/cardlist.dart';
-import 'package:stocard_alternative/db.dart';
+import 'package:stashcard/carddetail.dart';
+import 'package:stashcard/cardlist.dart';
+import 'package:stashcard/db.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum SortOptions { byName, byDateCreated, byUsage }
@@ -14,20 +14,20 @@ void main() async {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
-        home: StocardApp(),
+        home: Stashcard(),
         themeMode: themeMode,
       )
   );
 }
 
-class StocardApp extends StatefulWidget {
-  const StocardApp({super.key});
+class Stashcard extends StatefulWidget {
+  const Stashcard({super.key});
 
   @override
-  State<StocardApp> createState() => _StocardAppState();
+  State<Stashcard> createState() => _StashcardState();
 }
 
-class _StocardAppState extends State<StocardApp> {
+class _StashcardState extends State<Stashcard> {
   SortOptions selectedSort = SortOptions.byName;
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
