@@ -37,7 +37,7 @@ class _StashcardState extends State<Stashcard> {
 
   @override
   Widget build(BuildContext context) {
-    const String title = 'Budaicard';
+    const String title = 'Stashcard';
 
     return Scaffold(
           appBar: AppBar(
@@ -94,7 +94,7 @@ class _StashcardState extends State<Stashcard> {
                         actions: [
                           FilledButton(
                             onPressed: () => {
-                              launchUrl(Uri.parse("https://ko-fi.com/budai"))
+                              launchUrl(Uri.parse("https://ko-fi.com/lahev"))
                             },
                             child: const Text('Donate'),
                           ),

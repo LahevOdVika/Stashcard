@@ -1,4 +1,4 @@
-package com.budai.budaicard
+package com.lahevodvika.stashcard
 
 import io.flutter.embedding.android.FlutterActivity
 
