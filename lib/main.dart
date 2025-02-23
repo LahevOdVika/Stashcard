@@ -32,122 +32,145 @@ class _StashcardState extends State<Stashcard> {
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
+  int currentPageIndex = 0;
 
-  ThemeMode themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
     const String title = 'Stashcard';
 
     return Scaffold(
-          appBar: AppBar(
-            title: _isSearching ?
-              TextField(
-                controller: _searchController,
-                autofocus: true,
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(color: Colors.white),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value;
-                  });
-                },
-              )
-                : Text(title),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _isSearching = !_isSearching;
-                    if (!_isSearching) {
-                      _searchController.clear();
-                      searchQuery = '';
-                    }
-                  });
-                },
-                icon: Icon(_isSearching ? Icons.close : Icons.search)
-              ),
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => Theme(
-                        data: ThemeData.from(colorScheme: ColorScheme.of(context)),
-                      child: AlertDialog(
-                        title: const Text("Donate"),
-                        icon: const Icon(Icons.favorite),
-                        iconColor: Colors.red,
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 10,
-                          children: [
-                            const Text(
-                              "I'm a student and I work on this app in my free time. If you like it, you can support development by donating. And if you don't want to donate, that's fine too.",
-                              softWrap: true,
-                            ),
-                            const Text("Enjoy the app!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
-                          ],
+      bottomNavigationBar: NavigationBar(
+        destinations: const <Widget>[
+          NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Home'
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
+              label: "Settings"
+          )
+        ],
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+      ),
+      appBar: AppBar(
+        title: _isSearching ?
+          TextField(
+            controller: _searchController,
+            autofocus: true,
+            decoration: const InputDecoration(
+              hintText: 'Search...',
+              border: InputBorder.none,
+              hintStyle: TextStyle(color: Colors.white),
+            ),
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
+          )
+            : Text(title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isSearching = !_isSearching;
+                if (!_isSearching) {
+                  _searchController.clear();
+                  searchQuery = '';
+                }
+              });
+            },
+            icon: Icon(_isSearching ? Icons.close : Icons.search)
+          ),
+          IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => Theme(
+                    data: ThemeData.from(colorScheme: ColorScheme.of(context)),
+                  child: AlertDialog(
+                    title: const Text("Donate"),
+                    icon: const Icon(Icons.favorite),
+                    iconColor: Colors.red,
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 10,
+                      children: [
+                        const Text(
+                          "I'm a student and I work on this app in my free time. If you like it, you can support development by donating. And if you don't want to donate, that's fine too.",
+                          softWrap: true,
                         ),
-                        actions: [
-                          FilledButton(
-                            onPressed: () => {
-                              launchUrl(Uri.parse("https://ko-fi.com/lahev"))
-                            },
-                            child: const Text('Donate'),
-                          ),
-                          OutlinedButton(
-                            onPressed: () => {
-                              Navigator.pop(context)
-                            },
-                            child: const Text('Close'),
-                          )
-                        ],
+                        const Text("Enjoy the app!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
+                      ],
+                    ),
+                    actions: [
+                      FilledButton(
+                        onPressed: () => {
+                          launchUrl(Uri.parse("https://ko-fi.com/lahev"))
+                        },
+                        child: const Text('Donate'),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => {
+                          Navigator.pop(context)
+                        },
+                        child: const Text('Close'),
                       )
-                  ));
-                },
-                icon: const Icon(Icons.favorite_border),
+                    ],
+                  )
+              ));
+            },
+            icon: const Icon(Icons.favorite_border),
+          ),
+          PopupMenuButton<SortOptions>(
+            initialValue: selectedSort,
+            onSelected: (SortOptions sort) {
+              setState(() {
+                selectedSort = sort;
+              });
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<SortOptions>>[
+              const PopupMenuItem(
+                  value: SortOptions.byName,
+                  child: Text('Sort by name')
               ),
-              PopupMenuButton<SortOptions>(
-                initialValue: selectedSort,
-                onSelected: (SortOptions sort) {
-                  setState(() {
-                    selectedSort = sort;
-                  });
-                },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<SortOptions>>[
-                  const PopupMenuItem(
-                      value: SortOptions.byName,
-                      child: Text('Sort by name')
-                  ),
-                  const PopupMenuItem(
-                      value: SortOptions.byDateCreated,
-                      child: Text('Sort by date created')
-                  ),
-                  const PopupMenuItem(
-                      value: SortOptions.byUsage,
-                      child: Text('Sort by usage')
-                  ),
-                ],
+              const PopupMenuItem(
+                  value: SortOptions.byDateCreated,
+                  child: Text('Sort by date created')
+              ),
+              const PopupMenuItem(
+                  value: SortOptions.byUsage,
+                  child: Text('Sort by usage')
               ),
             ],
           ),
-          floatingActionButton: Builder(
-            builder: (BuildContext context) {
-              return FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const CardList())
-                  );
-                },
-                child: const Icon(Icons.add),
+        ],
+      ),
+      floatingActionButton: Builder(
+        builder: (BuildContext context) {
+          return FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CardList())
               );
             },
-          ),
-          body: CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
+            child: const Icon(Icons.add),
+          );
+        },
+      ),
+      body: <Widget>[
+        CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
+        Settings()
+      ][currentPageIndex],
     );
   }
 }
@@ -248,5 +271,13 @@ class _CardGridState extends State<CardGrid> {
         );
       },
     );
+  }
+}
+
+class Settings extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
