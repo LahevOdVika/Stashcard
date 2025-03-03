@@ -14,6 +14,7 @@ Map<String, Symbology> symbologies = {
   "ean13": EAN13(),
   "upcA": UPCA(),
   "upcE": UPCE(),
+  "qrCode": QRCode(),
 };
 
 class CardDetail extends StatefulWidget {
@@ -27,7 +28,7 @@ class CardDetail extends StatefulWidget {
 
 class _CardDetailState extends State<CardDetail> {
   CardOptions? selectedOption;
-  UserCard? card; // Ukládáme kartu do State
+  UserCard? card;
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _CardDetailState extends State<CardDetail> {
       canPop: true,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          _refreshCard(); // Refresh při návratu
+          _refreshCard();
         }
       },
       child: Scaffold(
@@ -132,7 +133,7 @@ class _CardDetailState extends State<CardDetail> {
               padding: const EdgeInsets.all(10),
               height: 200,
               child: SfBarcodeGenerator(
-                value: card!.code.toString(),
+                value: card!.code,
                 showValue: true,
                 textSpacing: 10,
                 symbology: symbologies[card!.symbology],

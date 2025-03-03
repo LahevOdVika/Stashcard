@@ -42,9 +42,8 @@ class _Scanner extends State<Scanner> {
     }
 
     final db = DatabaseHelper();
-    print(barcode.format);
     try {
-      final code = int.parse(barcode.displayValue!);
+      final code = barcode.displayValue!;
       await db.insertCard(UserCard(
           name: cardName,
           code: code,

@@ -5,7 +5,7 @@ import 'package:stashcard/main.dart';
 class UserCard {
   final int? id;
   final String name;
-  final int code;
+  final String code;
   final int usage;
   final DateTime createdAt;
   final String symbology;
@@ -35,7 +35,7 @@ class UserCard {
     return 'UserCard{id: $id, name: $name, code: $code, usage $usage, created_at: $createdAt, symbology: $symbology}';
   }
 
-  UserCard copyWith({int? id, String? name, int? code, int? usage, DateTime? createdAt, String? symbology}) {
+  UserCard copyWith({int? id, String? name, String? code, int? usage, DateTime? createdAt, String? symbology}) {
     return UserCard(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -56,7 +56,7 @@ class DatabaseHelper {
         join(await getDatabasesPath(), 'user_cards.db'),
         onCreate: (db, version) {
           return db.execute(
-              'CREATE TABLE user_cards(id INTEGER PRIMARY KEY, name TEXT, code INTEGER, usage INTEGER, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, symbology TEXT)'
+              'CREATE TABLE user_cards(id INTEGER PRIMARY KEY, name TEXT, code TEXT, usage INTEGER, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, symbology TEXT)'
           );
         },
         version: 1
@@ -79,7 +79,7 @@ class DatabaseHelper {
     return maps.map((map) => UserCard(
       id: map['id'] as int,
       name: map['name'] as String,
-      code: map['code'] as int,
+      code: map['code'] as String,
       usage: map['usage'] as int,
       createdAt: DateTime.parse(map['created_at'] as String),
       symbology: map['symbology'] as String,
@@ -102,7 +102,7 @@ class DatabaseHelper {
     return maps.map((map) => UserCard(
       id: map['id'] as int,
       name: map['name'] as String,
-      code: map['code'] as int,
+      code: map['code'] as String,
       usage: map['usage'] as int,
       createdAt: DateTime.parse(map['created_at'] as String),
       symbology: map['symbology'] as String,
@@ -119,7 +119,7 @@ class DatabaseHelper {
     return UserCard(
       id: maps[0]['id'] as int,
       name: maps[0]['name'] as String,
-      code: maps[0]['code'] as int,
+      code: maps[0]['code'] as String,
       usage: maps[0]['usage'] as int,
       createdAt: DateTime.parse(maps[0]['created_at'] as String),
       symbology: maps[0]['symbology'] as String,
@@ -136,7 +136,7 @@ class DatabaseHelper {
     return UserCard(
       id: maps[0]['id'] as int,
       name: maps[0]['name'] as String,
-      code: maps[0]['code'] as int,
+      code: maps[0]['code'] as String,
       usage: maps[0]['usage'] as int,
       createdAt: DateTime.parse(maps[0]['created_at'] as String),
       symbology: maps[0]['symbology'] as String,
