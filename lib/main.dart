@@ -32,34 +32,12 @@ class _StashcardState extends State<Stashcard> {
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
-  int currentPageIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
     const String title = 'Stashcard';
 
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        destinations: const <Widget>[
-          NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
-              label: 'Home'
-          ),
-          NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              selectedIcon: Icon(Icons.settings),
-              label: "Settings"
-          )
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-      ),
       appBar: AppBar(
         title: _isSearching ?
           TextField(
@@ -167,10 +145,7 @@ class _StashcardState extends State<Stashcard> {
           );
         },
       ),
-      body: <Widget>[
-        CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
-        Settings()
-      ][currentPageIndex],
+      body: CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,)
     );
   }
 }
@@ -271,13 +246,5 @@ class _CardGridState extends State<CardGrid> {
         );
       },
     );
-  }
-}
-
-class Settings extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
