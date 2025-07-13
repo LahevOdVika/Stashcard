@@ -12,8 +12,13 @@ void main() async {
   runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.dark),
+          brightness: Brightness.dark
+        ),
         home: Stashcard(),
         themeMode: themeMode,
       )
