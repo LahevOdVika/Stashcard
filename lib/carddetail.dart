@@ -129,14 +129,20 @@ class _CardDetailState extends State<CardDetail> {
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 30),
-            Container(
-              padding: const EdgeInsets.all(10),
-              height: 200,
-              child: SfBarcodeGenerator(
-                value: card!.code,
-                showValue: true,
-                textSpacing: 10,
-                symbology: symbologies[card!.symbology],
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                color: Colors.white,
+                height: 200,
+                width: 300,
+                child: SfBarcodeGenerator(
+                  barColor: Colors.black,
+                  value: card!.code,
+                  showValue: true,
+                  textSpacing: 10,
+                  textStyle: TextStyle(color: Colors.black),
+                  symbology: symbologies[card!.symbology],
+                ),
               ),
             ),
             const SizedBox(height: 30),
