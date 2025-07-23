@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stashcard/carddetail.dart';
 import 'package:stashcard/cardlist.dart';
 import 'package:stashcard/db.dart';
 import 'package:stashcard/settings.dart';
+import 'package:stashcard/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum SortOptions { byName, byDateCreated, byUsage }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ThemeMode themeMode = ThemeMode.system;
   runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        ),
-        darkTheme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.dark),
-          brightness: Brightness.dark
-        ),
-        home: Stashcard(),
-        themeMode: themeMode,
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: StashcardApp(),
       )
   );
+}
+
+class StashcardApp extends StatelessWidget {
+  const StashcardApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return MaterialApp(
+      theme: themeProvider.lightTheme,
+      darkTheme: themeProvider.darkTheme,
+      themeMode: themeProvider.themeMode,
+      home: Stashcard(),
+    );
+  }
 }
 
 class Stashcard extends StatefulWidget {
@@ -68,7 +77,7 @@ class _StashcardState extends State<Stashcard> {
           )
             : Text(title),
         actions: [
-          IconButton(
+         IconButton(
             onPressed: () {
               setState(() {
                 _isSearching = !_isSearching;
