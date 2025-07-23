@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stashcard/db.dart';
+import 'package:stashcard/providers/db.dart';
 
 class CardEdit extends StatefulWidget {
   final UserCard card;
@@ -29,7 +29,7 @@ class _CardEditState extends State<CardEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Card"),
+        title: Text("Edit card"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
