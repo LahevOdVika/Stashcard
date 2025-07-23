@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stashcard/carddetail.dart';
 import 'package:stashcard/cardlist.dart';
 import 'package:stashcard/db.dart';
+import 'package:stashcard/settings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum SortOptions { byName, byDateCreated, byUsage }
@@ -37,10 +38,16 @@ class _StashcardState extends State<Stashcard> {
   bool _isSearching = false;
   TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     const String title = 'Stashcard';
+
+    final List<Widget> pages = <Widget>[
+      CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
+      SettingsPage()
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -150,7 +157,19 @@ class _StashcardState extends State<Stashcard> {
           );
         },
       ),
-      body: CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,)
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Home"),
+          NavigationDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: "Settings"),
+        ],
+      ),
+      body: pages[currentPageIndex],
     );
   }
 }
