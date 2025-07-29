@@ -37,7 +37,6 @@ class _DestinationViewState extends State<DestinationView> {
                 } else if (widget.destination.index == 1) {
                   return const SettingsPage();
                 }
-                break;
             }
             assert(false);
             return const SizedBox();
