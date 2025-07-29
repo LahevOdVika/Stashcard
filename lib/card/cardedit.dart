@@ -29,7 +29,7 @@ class _CardEditState extends State<CardEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit card"),
+        title: Text("Edit Card"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

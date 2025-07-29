@@ -4,15 +4,6 @@ import 'package:stashcard/providers/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 
-/*
-* Settings
-* - color scheme
-* - dark/light theme
-* - github link
-* - app lock
-* - copyright
-* */
-
 enum AppThemeMode {
   system("System"),
   light("Light"),
@@ -58,11 +49,19 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _launchUrl() async {
     final Uri url = Uri.parse(githubUrl);
     if (!await launchUrl(url)) {
-      throw Exception("Could not launch $url");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not open $githubUrl'),)
+        );
+      }
     }
   }
 
-  ThemeMode? selectedTheme;
+  @override
+  void dispose() {
+    _themeModeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

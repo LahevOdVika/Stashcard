@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:stashcard/card/carddetail.dart';
+import 'package:stashcard/card/cardlist.dart';
+import 'package:stashcard/models/enums.dart';
+import 'package:stashcard/providers/db.dart';
 
-import '../card/carddetail.dart';
-import '../card/cardlist.dart';
-import '../providers/db.dart';
-
-enum SortOptions { byName, byDateCreated, byUsage }
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,6 +19,13 @@ class _HomeState extends State<Home> {
   TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
 
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     const String title = 'Stashcard';
@@ -33,7 +39,6 @@ class _HomeState extends State<Home> {
           decoration: const InputDecoration(
             hintText: 'Search...',
             border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.white),
           ),
           onChanged: (value) {
             setState(() {
@@ -78,15 +83,22 @@ class _HomeState extends State<Home> {
                         ),
                         actions: [
                           FilledButton(
-                            onPressed: () => {
-                              launchUrl(Uri.parse("https://ko-fi.com/lahev"))
+                            onPressed: () async {
+                              try {
+                                await launchUrl(Uri.parse("https://ko-fi.com/lahev"));
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Could not open donation link')),
+                                  );
+                                }
+                              }
                             },
                             child: const Text('Donate'),
                           ),
                           OutlinedButton(
-                            onPressed: () => {
-                              Navigator.pop(context)
-                            },
+                            onPressed: () =>
+                              Navigator.pop(context),
                             child: const Text('Close'),
                           )
                         ],
@@ -132,7 +144,7 @@ class _HomeState extends State<Home> {
           );
         },
       ),
-      body: CardGrid(selectedOption: selectedSort),
+      body: CardGrid(selectedOption: selectedSort, searchQuery: searchQuery,),
     );
   }
 }
@@ -166,8 +178,6 @@ class _CardGridState extends State<CardGrid> {
     setState(() {
       _futureCards = _loadCards();
     });
-
-    await _futureCards;
   }
 
   @override
@@ -189,9 +199,9 @@ class _CardGridState extends State<CardGrid> {
       future: _futureCards,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text("Chyba: ${snapshot.error}"));
+          return const Center(child: Text("Error loading cards"));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text("Žádné karty"));
+          return const Center(child: Text("No cards found"));
         }
 
         final userCards = snapshot.data!;
@@ -218,7 +228,9 @@ class _CardGridState extends State<CardGrid> {
                       context,
                       MaterialPageRoute(builder: (context) => CardDetail(cardId: userCard.id,))
                   );
-                  db.incrementUsage(userCard.id!);
+                  if (userCard.id != null) {
+                    db.incrementUsage(userCard.id!);
+                  }
                   _refreshCards();
                 },
                 child: Card(

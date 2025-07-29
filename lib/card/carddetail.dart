@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stashcard/card/cardedit.dart';
 import 'package:stashcard/providers/db.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
-
-import '../Views/home.dart';
+import 'package:stashcard/Views/home.dart';
 
 enum CardOptions { edit, share, delete }
 
@@ -56,7 +55,7 @@ class _CardDetailState extends State<CardDetail> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("card Detail"),
+          title: const Text("Card Detail"),
           actions: [
             PopupMenuButton(
               initialValue: selectedOption,
@@ -100,7 +99,7 @@ class _CardDetailState extends State<CardDetail> {
                               await db.deleteUserCard(widget.cardId!);
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => Home()),
+                                MaterialPageRoute(builder: (context) => const Home()),
                                     (route) => false,
                               );
                             },
@@ -147,7 +146,7 @@ class _CardDetailState extends State<CardDetail> {
               ),
             ),
             const SizedBox(height: 30),
-            Text("card type: ${card!.symbology}"),
+            Text("Card type: ${card!.symbology}"),
           ],
         ),
       ),

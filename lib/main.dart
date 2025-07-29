@@ -27,7 +27,7 @@ class StashcardApp extends StatelessWidget {
       theme: themeProvider.lightTheme,
       darkTheme: themeProvider.darkTheme,
       themeMode: themeProvider.themeMode,
-      home: NavigationHandler(),
+      home: const NavigationHandler(),
     );
   }
 }
@@ -46,8 +46,8 @@ class _NavigationHandlerState extends State<NavigationHandler> {
   ];
 
   List<Widget> routes = [
-    Home(),
-    SettingsPage(),
+    const Home(),
+    const SettingsPage(),
   ];
 
   int _selectedIndex = 0;
