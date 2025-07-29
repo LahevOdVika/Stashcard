@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stashcard/main.dart';
+import 'package:stashcard/models/enums.dart';
 
 class UserCard {
   final int? id;

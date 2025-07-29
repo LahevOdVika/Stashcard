@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stashcard/scanner.dart';
+import 'package:stashcard/card/scanner.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<List<String>> loadCards(String filter) async {

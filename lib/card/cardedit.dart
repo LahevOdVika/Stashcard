@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stashcard/db.dart';
+import 'package:stashcard/providers/db.dart';
 
 class CardEdit extends StatefulWidget {
   final UserCard card;
