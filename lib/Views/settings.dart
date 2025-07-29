@@ -116,11 +116,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.lock),
-            title: const Text("App lock"),
-          ),
-          const Divider(),
-          ListTile(
             trailing: TextButton.icon(
                 onPressed: () {
                   _launchUrl();
