@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stashcard/providers/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final githubUrl = "https://github.com/LahevOdVika/Stashcard";
   final TextEditingController _themeModeController = TextEditingController();
+  late SharedPreferences prefs;
 
   Future<void> _launchUrl() async {
     final Uri url = Uri.parse(githubUrl);
@@ -61,6 +63,16 @@ class _SettingsPageState extends State<SettingsPage> {
   void dispose() {
     _themeModeController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initPrefs();
+  }
+
+  void _initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -87,6 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           onColorChanged: (Color color) {
                             themeProvider.setSeedColor(color);
                             Navigator.of(context).pop();
+                            prefs.setString("seedColor", color.toHexString());
                           },
                       ),
                     );
