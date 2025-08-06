@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:stashcard/main.dart';
 import 'package:stashcard/providers/db.dart';
 import 'carddetail.dart';
-import '../Views/home.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key, required this.cardName});
@@ -55,8 +55,8 @@ class _Scanner extends State<Scanner> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
-        (Route<dynamic> route) => false,
+        MaterialPageRoute(builder: (context) => const NavigationHandler()),
+        ModalRoute.withName('/'),
       );
 
       Navigator.push(

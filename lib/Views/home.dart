@@ -236,7 +236,13 @@ class _CardGridState extends State<CardGrid> {
                 child: Card(
                   elevation: 2,
                   child: Center(
-                    child: Text(userCard.name),
+                    child: Text(
+                        userCard.name,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    ),
                   ),
                 ),
               );
