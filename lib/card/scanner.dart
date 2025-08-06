@@ -3,6 +3,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:stashcard/main.dart';
 import 'package:stashcard/providers/db.dart';
 import 'carddetail.dart';
+import 'package:stashcard/models/card.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key, required this.cardName});

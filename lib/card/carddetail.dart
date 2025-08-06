@@ -3,6 +3,7 @@ import 'package:stashcard/card/cardedit.dart';
 import 'package:stashcard/main.dart';
 import 'package:stashcard/providers/db.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+import 'package:stashcard/models/card.dart';
 
 enum CardOptions { edit, share, delete }
 
@@ -120,35 +121,38 @@ class _CardDetailState extends State<CardDetail> {
           ],
         ),
         body: card == null
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-          children: [
-            const SizedBox(height: 30),
-            Text(
-              card!.name,
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 30),
+            ? const Center(child: CircularProgressIndicator()) :
             Center(
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                color: Colors.white,
-                height: 200,
-                width: 300,
-                child: SfBarcodeGenerator(
-                  barColor: Colors.black,
-                  value: card!.code,
-                  showValue: true,
-                  textSpacing: 10,
-                  textStyle: TextStyle(color: Colors.black),
-                  symbology: symbologies[card!.symbology],
-                ),
-              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 30),
+                  Text(
+                    card!.name,
+                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 300,
+                    width: 400,
+                    child: Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SfBarcodeGenerator(
+                          barColor: Colors.black,
+                          value: card!.code,
+                          showValue: true,
+                          textSpacing: 10,
+                          textStyle: TextStyle(color: Colors.black),
+                          symbology: symbologies[card!.symbology],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+                      ),
             ),
-            const SizedBox(height: 30),
-            Text("Card type: ${card!.symbology}"),
-          ],
-        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:stashcard/card/carddetail.dart';
 import 'package:stashcard/card/cardlist.dart';
 import 'package:stashcard/models/enums.dart';
 import 'package:stashcard/providers/db.dart';
+import 'package:stashcard/models/card.dart';
 
 
 class Home extends StatefulWidget {
